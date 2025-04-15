@@ -37,9 +37,9 @@ pipeline {
             echo "Running in $WORKSPACE"
             dir("$WORKSPACE/azure-vote") {
                script {
-                  withDockerRegistry([credentialsId: 'dockerhub', url: '']) {
-                     sh 'docker build -t zhivkotringov/azure-voting-app .'
-                     sh 'docker push zhvikotringov/azure-voting-app'
+                  docker.withRegistry('', 'dockerhub') {
+                     def image = docker.build('zhivkotringov/azure-voting-app')
+                     image.push()
                   }
                }
             }
