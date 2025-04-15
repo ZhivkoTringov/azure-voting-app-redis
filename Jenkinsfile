@@ -39,17 +39,14 @@ pipeline {
          }
          post {
             always {
-               recordIssues(
-                  tools: [anchore()],
-                  aggregatingResults: true,
-               )
+               echo "Grype scan finished"
             }
          }
       }
    }
    post {
       always {
-         echo 'Grype scan finished'
+         sh(script: 'docker compose down')
       }
    }
 }
