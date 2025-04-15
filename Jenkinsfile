@@ -32,16 +32,17 @@ pipeline {
             }
          }
       }
-      stage('Docker Push') {
+      stage('Run Grype'){
+         agent {label: Node1}
          steps {
-            echo "Running in $WORKSPACE"
-            dir("$WORKSPACE/azure-vote") {
-               script {
-                  docker.withRegistry('', 'dockerhub') {
-                     def image = docker.build('zhivkotringov/azure-voting-app')
-                     image.push()
-                  }
-               }
+            grypeScan autoInstall: false, repName: 'grypeReport_${JOB_NAME}_${BUILD_NUMBER}.txt', scanDest: 'registry:zhivkotringov/azure-voting-app:latest'
+         }
+         post {
+            always {
+               recordIssues(
+                  tools: [grype()],
+                  aggregatingResults: true,
+               )
             }
          }
       }
