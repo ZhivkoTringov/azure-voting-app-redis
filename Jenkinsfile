@@ -33,7 +33,7 @@ pipeline {
          }
       }
       stage('Run Grype'){
-         agent {label Node1}
+         agent {label 'Node1'}
          steps {
             grypeScan autoInstall: false, repName: 'grypeReport_${JOB_NAME}_${BUILD_NUMBER}.txt', scanDest: 'registry:zhivkotringov/azure-voting-app:latest'
          }
