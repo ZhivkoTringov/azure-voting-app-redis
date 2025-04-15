@@ -49,7 +49,7 @@ pipeline {
    }
    post {
       always {
-         sh(script: 'docker compose down')
+         echo 'Grype scan finished'
       }
    }
 }
