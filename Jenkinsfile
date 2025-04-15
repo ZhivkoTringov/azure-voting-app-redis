@@ -40,7 +40,7 @@ pipeline {
          post {
             always {
                recordIssues(
-                  tools: [grype()],
+                  tools: [anchore()],
                   aggregatingResults: true,
                )
             }
